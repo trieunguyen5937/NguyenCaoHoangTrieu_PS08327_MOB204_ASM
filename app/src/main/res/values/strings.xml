@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">T-Library</string>
+    <string name="confirm_exit_messg">Bạn có muốn thoát ứng dụng?</string>
+    <string name="confirm_logout_messg">Bạn có muốn đăng xuất tài khoản?</string>
+</resources>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--<color name="colorPrimary">#008577</color>-->
+    <color name="colorPrimary">#D2691E</color>
+    <!--<color name="colorPrimaryDark">#00574B</color>-->
+    <color name="colorPrimaryDark">#D2691E</color>
+    <!--<color name="colorAccent">#D81B60</color>-->
+    <color name="colorAccent">#D2691E</color>
+    <color name="actionBarColor">#D2691E</color>
+    <color name="actionBarTitleColor">#ffff</color>
+    <color name="statusBarColor">#D2691E</color>
+    <color name="statusBarColorChao">#00574B</color>
+    <color name="statusBarColorLogin">#00574B</color>
+</resources>
