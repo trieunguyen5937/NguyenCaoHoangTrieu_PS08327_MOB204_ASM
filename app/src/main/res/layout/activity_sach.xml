@@ -17,30 +17,16 @@
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
-    <FrameLayout
-        android:id="@+id/framelayout_search"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:visibility="gone">
-
-        <EditText
+        <com.example.trieunguyen.ps08327_mob204_asm.utilities.ClearableEditText
             android:id="@+id/et_searchField"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Tìm sách"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
             android:inputType="textAutoComplete"
-            android:singleLine="true" />
-
-        <Button
-            android:id="@+id/bt_clearSearchField"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:layout_gravity="right|center_vertical"
-            android:layout_marginRight="10dp"
-            android:background="@drawable/ic_clear_black" />
-
-    </FrameLayout>
+            android:singleLine="true"
+            android:visibility="gone"/>
 
     <ListView
         android:id="@+id/lv_sach"

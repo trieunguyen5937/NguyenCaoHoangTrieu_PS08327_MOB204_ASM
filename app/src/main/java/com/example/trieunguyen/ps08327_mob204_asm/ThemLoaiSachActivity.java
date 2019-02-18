@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -15,6 +16,7 @@ import android.widget.Toast;
 import com.example.trieunguyen.ps08327_mob204_asm.adapter.LoaiSachAdapter;
 import com.example.trieunguyen.ps08327_mob204_asm.dao.LoaiSachDAO;
 import com.example.trieunguyen.ps08327_mob204_asm.model.LoaiSach;
+import com.example.trieunguyen.ps08327_mob204_asm.utilities.ClearableEditText;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,7 +48,6 @@ public class ThemLoaiSachActivity extends AppCompatActivity {
                 onBackPressed();
             }
         });
-
     }
 
     private void init() {
@@ -55,7 +56,7 @@ public class ThemLoaiSachActivity extends AppCompatActivity {
         et_moTa = (EditText) findViewById(R.id.et_moTa);
         et_viTri = (EditText) findViewById(R.id.et_viTri);
 
-
+        et_maLoaiSach.addTextChangedListener(new ClearableEditText(ThemLoaiSachActivity.this));
     }
 
     @Override
@@ -72,7 +73,7 @@ public class ThemLoaiSachActivity extends AppCompatActivity {
         int viTri = Integer.parseInt(et_viTri.getText().toString());
         LoaiSach loaiSach = new LoaiSach(maLoai, tenLoai, moTa, viTri);
         long i = loaiSachDAO.insert(loaiSach);
-        if (i >= 0) {
+        if (i > 0) {
             Toast.makeText(this, "Thêm dữ liệu thành công", Toast.LENGTH_SHORT).show();
             Intent intent = new Intent();
             intent.putExtra("LoaiSach", loaiSach);

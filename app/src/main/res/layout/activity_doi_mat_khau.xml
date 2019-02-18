@@ -34,14 +34,14 @@
         android:layout_height="80dp"
         android:src="@drawable/logo" />
 
-    <EditText
+    <com.example.trieunguyen.ps08327_mob204_asm.utilities.ClearableEditText
         android:id="@+id/et_newPassword"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:hint="Mật khẩu mới" />
 
-    <EditText
+    <com.example.trieunguyen.ps08327_mob204_asm.utilities.ClearableEditText
         android:id="@+id/et_confirmPassword"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

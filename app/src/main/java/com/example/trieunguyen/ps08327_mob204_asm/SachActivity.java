@@ -52,26 +52,25 @@ public class SachActivity extends AppCompatActivity {
     }
 
     private void timSach() {
-        FrameLayout frameLayout_search = findViewById(R.id.framelayout_search);
         final EditText et_searchField = findViewById(R.id.et_searchField);
-        Button bt_clearSearchField = findViewById(R.id.bt_clearSearchField);
+//        Button bt_clearSearchField = findViewById(R.id.bt_clearSearchField);
         //toggle để ẩn hiện search field
         if (toggle == false) {
-            frameLayout_search.setVisibility(View.VISIBLE);
+            et_searchField.setVisibility(View.VISIBLE);
             et_searchField.requestFocus();
             toggle = true;
         } else {
-            frameLayout_search.setVisibility(View.GONE);
+            et_searchField.setVisibility(View.GONE);
             toggle = false;
         }
 
-        bt_clearSearchField.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //clear nội dung search
-                et_searchField.setText("");
-            }
-        });
+//        bt_clearSearchField.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                //clear nội dung search
+//                et_searchField.setText("");
+//            }
+//        });
 
         //hàm tìm kiếm
     }

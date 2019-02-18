@@ -23,7 +23,7 @@
         app:srcCompat="@drawable/user" />
 
     <TextView
-        android:id="@+id/tv_id"
+        android:id="@+id/tv_tenNguoiDung"
         android:layout_width="200dp"
         android:layout_height="25dp"
         android:layout_marginStart="8dp"
@@ -42,7 +42,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/tv_loaiSach"
+        android:id="@+id/tv_nguoiDungPassword"
         android:layout_width="200dp"
         android:layout_height="25dp"
         android:layout_marginStart="8dp"

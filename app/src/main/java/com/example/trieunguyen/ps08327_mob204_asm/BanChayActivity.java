@@ -25,16 +25,7 @@ public class BanChayActivity extends AppCompatActivity {
             }
         });
 
-        FrameLayout frameLayout_search = findViewById(R.id.framelayout_search);
         final EditText et_searchField = findViewById(R.id.et_searchField);
-        Button bt_clearSearchField = findViewById(R.id.bt_clearSearchField);
-        bt_clearSearchField.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //clear nội dung search
-                et_searchField.setText("");
-            }
-        });
 
     }
 }

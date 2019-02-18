@@ -66,8 +66,9 @@ public class NguoiDungDAO {
 
     }
 
-    public void delete() {
-
+    public void delete(String username) {
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        int result = db.delete(TABLE_NAME, "username = ?", new String[]{username});
     }
 
     public ArrayList<NguoiDung> getAll() {

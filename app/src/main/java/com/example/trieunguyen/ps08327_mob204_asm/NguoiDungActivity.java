@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -19,6 +20,14 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.example.trieunguyen.ps08327_mob204_asm.adapter.LoaiSachAdapter;
+import com.example.trieunguyen.ps08327_mob204_asm.adapter.NguoiDungAdapter;
+import com.example.trieunguyen.ps08327_mob204_asm.dao.NguoiDungDAO;
+import com.example.trieunguyen.ps08327_mob204_asm.model.LoaiSach;
+import com.example.trieunguyen.ps08327_mob204_asm.model.NguoiDung;
+
+import java.util.ArrayList;
+
 public class NguoiDungActivity extends AppCompatActivity {
 
     ListView lv_nguoiDung;
@@ -26,11 +35,15 @@ public class NguoiDungActivity extends AppCompatActivity {
     FloatingActionButton fab;
     ImageView close;
     Button bt_logout;
+    NguoiDungDAO nguoiDungDAO;
+    ArrayList<NguoiDung> listNguoiDung;
+    NguoiDungAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nguoi_dung);
+
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Người dùng");
@@ -42,6 +55,11 @@ public class NguoiDungActivity extends AppCompatActivity {
             }
         });
 
+        init();
+
+        adapter = new NguoiDungAdapter(NguoiDungActivity.this, listNguoiDung);
+        lv_nguoiDung.setAdapter(adapter);
+
         fab = findViewById(R.id.fab);
 
         fab.setOnClickListener(new View.OnClickListener() {
@@ -52,6 +70,23 @@ public class NguoiDungActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    public void init() {
+        lv_nguoiDung = findViewById(R.id.lv_nguoiDung);
+
+        listNguoiDung = new ArrayList<>();
+//        listNguoiDung = nguoiDungDAO.getAll();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 999 & resultCode == RESULT_OK) {
+            NguoiDung nguoiDung = (NguoiDung) data.getSerializableExtra("NguoiDung");
+            listNguoiDung.add(nguoiDung);
+            adapter.notifyDataSetChanged();
+        }
     }
 
     @Override
