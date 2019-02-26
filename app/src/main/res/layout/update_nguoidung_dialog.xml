@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_gravity="center"
@@ -43,7 +44,7 @@
                     android:layout_marginRight="8dp"
                     android:layout_marginBottom="8dp"
                     android:padding="5dp"
-                    android:text="Thông tin loại sách"
+                    android:text="Thông tin người dùng"
                     android:textSize="20dp"
                     android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -80,11 +81,11 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Mã loại sách: "
+                    android:text="Tên đăng nhập: "
                     android:textSize="18dp" />
 
                 <com.example.trieunguyen.ps08327_mob204_asm.utilities.ClearableEditText
-                    android:id="@+id/et_maLoaiSach"
+                    android:id="@+id/et_username"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ems="10"
@@ -104,11 +105,11 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Tên loại sách: "
+                    android:text="Mật khẩu: "
                     android:textSize="18dp" />
 
                 <com.example.trieunguyen.ps08327_mob204_asm.utilities.ClearableEditText
-                    android:id="@+id/et_tenLoaiSach"
+                    android:id="@+id/et_password"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ems="10"
@@ -129,11 +130,11 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Mô tả: "
+                    android:text="Điện thoại: "
                     android:textSize="18dp" />
 
                 <com.example.trieunguyen.ps08327_mob204_asm.utilities.ClearableEditText
-                    android:id="@+id/et_moTa"
+                    android:id="@+id/et_phone"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ems="10"
@@ -154,11 +155,11 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Vị trí: "
+                    android:text="Họ tên: "
                     android:textSize="18dp" />
 
                 <com.example.trieunguyen.ps08327_mob204_asm.utilities.ClearableEditText
-                    android:id="@+id/et_viTri"
+                    android:id="@+id/et_hoTen"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ems="10"
@@ -183,10 +184,10 @@
                     android:layout_marginRight="2dp"
                     android:layout_weight="1"
                     android:background="#58D68D"
+                    android:enabled="false"
                     android:focusable="true"
                     android:text="Cập nhật"
                     android:textAllCaps="false"
-                    android:enabled="false"
                     android:textSize="15dp" />
 
                 <Button

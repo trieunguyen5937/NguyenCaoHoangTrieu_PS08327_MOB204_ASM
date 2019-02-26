@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_gravity="center"
@@ -43,7 +44,7 @@
                     android:layout_marginRight="8dp"
                     android:layout_marginBottom="8dp"
                     android:padding="5dp"
-                    android:text="Thông tin loại sách"
+                    android:text="Thêm hóa đơn"
                     android:textSize="20dp"
                     android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -51,21 +52,6 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintVertical_bias="0.0" />
-
-                <TextView
-                    android:id="@+id/tv_edit"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginRight="8dp"
-                    android:layout_marginBottom="8dp"
-                    android:paddingRight="5dp"
-                    android:gravity="center"
-                    android:text="Sửa"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
 
             </android.support.constraint.ConstraintLayout>
 
@@ -80,17 +66,14 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Mã loại sách: "
+                    android:text="Mã hóa đơn: "
                     android:textSize="18dp" />
 
                 <com.example.trieunguyen.ps08327_mob204_asm.utilities.ClearableEditText
-                    android:id="@+id/et_maLoaiSach"
+                    android:id="@+id/et_maHoaDon"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ems="10"
-                    android:enabled="false"
-                    android:focusable="false"
-                    android:focusableInTouchMode="false"
                     android:textSize="18dp" />
             </LinearLayout>
 
@@ -98,75 +81,34 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
+                android:orientation="horizontal"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Tên loại sách: "
+                    android:layout_weight="0"
+                    android:text="Ngày: "
                     android:textSize="18dp" />
 
                 <com.example.trieunguyen.ps08327_mob204_asm.utilities.ClearableEditText
-                    android:id="@+id/et_tenLoaiSach"
+                    android:id="@+id/et_ngay"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:ems="10"
-                    android:enabled="false"
-                    android:focusable="true"
-                    android:focusableInTouchMode="true"
+                    android:hint="DD / MM / YYYY"
                     android:inputType="text"
                     android:textSize="18dp" />
-            </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp">
-
-                <TextView
+                <ImageView
+                    android:id="@+id/iv_chooseDate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Mô tả: "
-                    android:textSize="18dp" />
-
-                <com.example.trieunguyen.ps08327_mob204_asm.utilities.ClearableEditText
-                    android:id="@+id/et_moTa"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:ems="10"
-                    android:enabled="false"
-                    android:focusable="true"
-                    android:focusableInTouchMode="true"
-                    android:inputType="textMultiLine"
-                    android:textSize="18dp" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Vị trí: "
-                    android:textSize="18dp" />
-
-                <com.example.trieunguyen.ps08327_mob204_asm.utilities.ClearableEditText
-                    android:id="@+id/et_viTri"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:ems="10"
-                    android:enabled="false"
-                    android:focusable="true"
-                    android:focusableInTouchMode="true"
-                    android:inputType="text"
-                    android:textSize="18dp" />
+                    android:layout_gravity="center"
+                    android:layout_weight="0"
+                    android:src="@drawable/ic_date" />
             </LinearLayout>
 
             <LinearLayout
@@ -177,16 +119,15 @@
                 android:paddingTop="3dp">
 
                 <Button
-                    android:id="@+id/bt_update"
+                    android:id="@+id/bt_continue"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="2dp"
                     android:layout_weight="1"
                     android:background="#58D68D"
                     android:focusable="true"
-                    android:text="Cập nhật"
+                    android:text="Tiếp tục"
                     android:textAllCaps="false"
-                    android:enabled="false"
                     android:textSize="15dp" />
 
                 <Button

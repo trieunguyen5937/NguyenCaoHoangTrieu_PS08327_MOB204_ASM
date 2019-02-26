@@ -9,6 +9,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".HoaDonChiTietItemsActivity"></activity>
         <activity android:name=".MainActivity" />
         <activity
             android:name=".ChaoActivity"
@@ -24,14 +25,19 @@
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity android:name=".ThongKeActivity" />
         <activity android:name=".LoaiSachActivity" />
-        <activity android:name=".SachActivity" />
+        <activity android:name=".SachActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.SEARCH" />
+            </intent-filter>
+        </activity>
         <activity android:name=".HoaDonActivity" />
         <activity android:name=".NguoiDungActivity" />
         <activity android:name=".BanChayActivity" />
         <activity android:name=".ThemLoaiSachActivity" />
         <activity android:name=".DoiMatKhauActivity" />
         <activity android:name=".ThemNguoiDungActivity" />
-        <activity android:name=".ThemSachActivity"></activity>
+        <activity android:name=".ThemSachActivity" />
+        <activity android:name=".ThemHoaDonChiTietActivity" />
     </application>
 
 </manifest>

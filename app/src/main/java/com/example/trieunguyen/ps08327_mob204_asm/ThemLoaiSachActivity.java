@@ -55,8 +55,6 @@ public class ThemLoaiSachActivity extends AppCompatActivity {
         et_tenLoaiSach = (EditText) findViewById(R.id.et_tenLoaiSach);
         et_moTa = (EditText) findViewById(R.id.et_moTa);
         et_viTri = (EditText) findViewById(R.id.et_viTri);
-
-        et_maLoaiSach.addTextChangedListener(new ClearableEditText(ThemLoaiSachActivity.this));
     }
 
     @Override
@@ -74,13 +72,13 @@ public class ThemLoaiSachActivity extends AppCompatActivity {
         LoaiSach loaiSach = new LoaiSach(maLoai, tenLoai, moTa, viTri);
         long i = loaiSachDAO.insert(loaiSach);
         if (i > 0) {
-            Toast.makeText(this, "Thêm dữ liệu thành công", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Thêm loại sách " + tenLoai.toUpperCase() + " thành công", Toast.LENGTH_LONG).show();
             Intent intent = new Intent();
             intent.putExtra("LoaiSach", loaiSach);
             setResult(RESULT_OK, intent);
             finish();
         } else {
-            Toast.makeText(this, "Thêm dữ không liệu thành công", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Thêm loại sách mới không thành công", Toast.LENGTH_SHORT).show();
             finish();
         }
         return true;

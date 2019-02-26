@@ -43,7 +43,7 @@
                     android:layout_marginRight="8dp"
                     android:layout_marginBottom="8dp"
                     android:padding="5dp"
-                    android:text="Thông tin loại sách"
+                    android:text="Thông tin sách"
                     android:textSize="20dp"
                     android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -80,11 +80,36 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Mã loại sách: "
+                    android:text="Mã sách: "
                     android:textSize="18dp" />
 
                 <com.example.trieunguyen.ps08327_mob204_asm.utilities.ClearableEditText
-                    android:id="@+id/et_maLoaiSach"
+                    android:id="@+id/et_maSach"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:enabled="false"
+                    android:focusable="false"
+                    android:focusableInTouchMode="false"
+                    android:textSize="18dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:focusedByDefault="false"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Loại sách: "
+                    android:textSize="18dp" />
+
+                <Spinner
+                    android:id="@+id/sp_tenLoaiSach"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ems="10"
@@ -104,11 +129,11 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Tên loại sách: "
+                    android:text="Tác giả: "
                     android:textSize="18dp" />
 
                 <com.example.trieunguyen.ps08327_mob204_asm.utilities.ClearableEditText
-                    android:id="@+id/et_tenLoaiSach"
+                    android:id="@+id/et_tacGia"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ems="10"
@@ -129,11 +154,11 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Mô tả: "
+                    android:text="Nhà xuất bản: "
                     android:textSize="18dp" />
 
                 <com.example.trieunguyen.ps08327_mob204_asm.utilities.ClearableEditText
-                    android:id="@+id/et_moTa"
+                    android:id="@+id/et_NXB"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ems="10"
@@ -154,11 +179,36 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Vị trí: "
+                    android:text="Giá bìa: "
                     android:textSize="18dp" />
 
                 <com.example.trieunguyen.ps08327_mob204_asm.utilities.ClearableEditText
-                    android:id="@+id/et_viTri"
+                    android:id="@+id/et_giaBia"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:enabled="false"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
+                    android:inputType="text"
+                    android:textSize="18dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Số lượng: "
+                    android:textSize="18dp" />
+
+                <com.example.trieunguyen.ps08327_mob204_asm.utilities.ClearableEditText
+                    android:id="@+id/et_soLuong"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ems="10"

@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#FFF5EE"
     android:orientation="vertical"
     tools:context=".SachActivity">
 
@@ -17,21 +18,29 @@
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
-        <com.example.trieunguyen.ps08327_mob204_asm.utilities.ClearableEditText
-            android:id="@+id/et_searchField"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Tìm sách"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
-            android:inputType="textAutoComplete"
-            android:singleLine="true"
-            android:visibility="gone"/>
+    <com.example.trieunguyen.ps08327_mob204_asm.utilities.ClearableEditText
+        android:id="@+id/et_searchField"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:elevation="4dp"
+        android:hint="Tìm sách"
+        android:inputType="textAutoComplete"
+        android:singleLine="true"
+        android:visibility="gone" />
 
-    <ListView
-        android:id="@+id/lv_sach"
+    <!--<ListView-->
+    <!--android:id="@+id/lv_sach"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:layout_margin="5dp" />-->
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_sach"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="5dp" />
+        android:layout_margin="5dp"
+        android:paddingTop="5dp" />
 
 </LinearLayout>

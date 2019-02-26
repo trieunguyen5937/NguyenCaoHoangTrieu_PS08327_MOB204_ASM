@@ -13,7 +13,7 @@ import java.util.ArrayList;
 
 public class LoaiSachDAO {
     private DbHelper dbHelper;
-    private SQLiteDatabase db;
+//    private SQLiteDatabase db;
 
     public static final String TABLE_NAME = "LOAISACH";
     public static final String SQL_LOAI_SACH =
@@ -32,7 +32,7 @@ public class LoaiSachDAO {
 
     public LoaiSachDAO(Context context) {
         dbHelper = new DbHelper(context);
-        db = dbHelper.getWritableDatabase();
+//        db = dbHelper.getWritableDatabase();
     }
 
     //cach 1
@@ -85,7 +85,7 @@ public class LoaiSachDAO {
 
     public ArrayList<LoaiSach> getAll() {
         ArrayList<LoaiSach> list = new ArrayList<>();
-
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
         Cursor cursor = db.rawQuery("Select * from " + TABLE_NAME, null);
         //đưa trỏ về dòng đầu của ResultSet
         cursor.moveToFirst();

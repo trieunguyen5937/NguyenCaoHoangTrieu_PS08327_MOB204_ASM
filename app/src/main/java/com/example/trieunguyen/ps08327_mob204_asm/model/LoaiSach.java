@@ -4,25 +4,25 @@ import java.io.Serializable;
 
 public class LoaiSach implements Serializable {
     //access modifier
-    private String ma, ten, mota;
+    private String maLoai, ten, mota;
     private int vitri;
 
     public LoaiSach() {
     }
 
-    public LoaiSach(String ma, String ten, String mota, int vitri) {
-        this.ma = ma;
+    public LoaiSach(String maLoai, String ten, String mota, int vitri) {
+        this.maLoai = maLoai;
         this.ten = ten;
         this.mota = mota;
         this.vitri = vitri;
     }
 
     public String getMa() {
-        return ma;
+        return maLoai;
     }
 
     public void setMa(String ma) {
-        this.ma = ma;
+        this.maLoai = ma;
     }
 
     public String getTen() {

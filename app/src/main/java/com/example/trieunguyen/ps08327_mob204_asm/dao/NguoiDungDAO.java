@@ -13,6 +13,7 @@ import java.util.ArrayList;
 
 public class NguoiDungDAO {
     private DbHelper dbHelper;
+    private SQLiteDatabase db;
 
     public static final String TABLE_NAME = "NGUOIDUNG";
     public static final String SQL_NGUOI_DUNG =
@@ -30,13 +31,14 @@ public class NguoiDungDAO {
 
     public NguoiDungDAO(Context context) {
         dbHelper = new DbHelper(context);
+        db = dbHelper.getWritableDatabase();
     }
 
     public boolean checkLogin(String username, String password) {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
         String strSql = "Select * from NGUOIDUNG Where username = '" + username + "' and password = '" + password + "'";
         Cursor cursor = db.rawQuery(strSql, null);
-        if(cursor.getCount() <= 0) {
+        if (cursor.getCount() <= 0) {
             return false;
         } else {
             cursor.moveToFirst();
@@ -48,7 +50,6 @@ public class NguoiDungDAO {
             DbHelper.USER = nguoiDung;
             return true;
         }
-
     }
 
     public long insert(NguoiDung nguoiDung) {
@@ -62,8 +63,18 @@ public class NguoiDungDAO {
         return rowPosition;
     }
 
-    public void update() {
-
+    public int update(NguoiDung nguoiDung) {
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("username", nguoiDung.getUsername());
+        values.put("password", nguoiDung.getPassword());
+        values.put("phone", nguoiDung.getPhone());
+        values.put("hoTen", nguoiDung.getHoTen());
+        int result = db.update(TABLE_NAME, values, "username = ?", new String[]{nguoiDung.getUsername()});
+        if (result == 0) {
+            return -1;
+        }
+        return 1;
     }
 
     public void delete(String username) {
@@ -85,7 +96,7 @@ public class NguoiDungDAO {
             list.add(new NguoiDung(un, pw, phone, hoTen));
             cursor.moveToNext();
         }
-        return null;
+        return list;
     }
 
     public void getById() {

@@ -1,6 +1,9 @@
 package com.example.trieunguyen.ps08327_mob204_asm.model;
 
-public class NguoiDung {
+import java.io.Serializable;
+
+public class NguoiDung implements Serializable {
+    //access modifier
     private String username, password, phone, hoTen;
 
     public NguoiDung() {

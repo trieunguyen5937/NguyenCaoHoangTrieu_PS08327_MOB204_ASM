@@ -11,4 +11,8 @@
     <color name="statusBarColor">#D2691E</color>
     <color name="statusBarColorChao">#00574B</color>
     <color name="statusBarColorLogin">#00574B</color>
+    <color name="buttonUpdateColor">#DC7633</color>
+    <color name="snackbarBackground">#F5CBA7</color>
+    <color name="popupMenuBackground">#FFF5EE</color>
+    <color name="popupMenuTextColor">#626567</color>
 </resources>

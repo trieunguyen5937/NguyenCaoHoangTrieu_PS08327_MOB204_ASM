@@ -1,14 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/addUser"
+        android:icon="@drawable/ic_playlist_add_white"
+        android:title="Thêm người dùng"
+        app:showAsAction="never" />
 
-    <item android:id="@+id/updatePass"
-        android:icon="@drawable/ic_update_password"
-        android:title="Đổi mật khẩu"
-        app:showAsAction="ifRoom"/>
-
-    <item android:id="@+id/logout"
+    <item
+        android:id="@+id/logout"
         android:icon="@drawable/ic_logout"
         android:title="Đăng xuất"
-        app:showAsAction="ifRoom"/>
+        app:showAsAction="never" />
+
 </menu>

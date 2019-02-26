@@ -6,6 +6,11 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <!--<item name="popupMenuStyle">@style/PopupTheme</item>-->
+        <item name="android:itemBackground">@color/popupMenuBackground</item>
+        <item name="textAppearanceLargePopupMenu">@style/textAppearanceLarge</item>
+        <item name="textAppearanceSmallPopupMenu">@style/textAppearanceSmall</item>
+        <item name="autoCompleteTextViewStyle">@style/SearchViewStyle</item>
     </style>
 
     <style name="AppTheme." parent="Theme.AppCompat.Light.NoActionBar">
@@ -16,6 +21,25 @@
     <style name="TextAppearance.AppCompat.Widget.ActionBar.Title" parent="@android:style/TextAppearance">
         <item name="android:textSize">25dp</item>
         <item name="android:textColor">@color/actionBarTitleColor</item>
+    </style>
+
+    <style name="PopupTheme" parent="@style/Widget.AppCompat.Light.PopupMenu">
+        <item name="android:itemBackground">@color/popupMenuBackground</item>
+    </style>
+
+    <style name="textAppearanceLarge" parent="TextAppearance.AppCompat.Widget.PopupMenu.Large">
+        <item name="android:textColor">@color/popupMenuTextColor</item>
+        <item name="android:textSize">16dp</item>
+    </style>
+
+    <style name="textAppearanceSmall" parent="TextAppearance.AppCompat.Widget.PopupMenu.Small">
+        <item name="android:textColor">@color/popupMenuTextColor</item>
+        <item name="android:textSize">16dp</item>
+    </style>
+
+    <style name="SearchViewStyle" parent="@android:style/Widget.Holo.Light.AutoCompleteTextView">
+        <item name="android:cursorVisible">true</item>
+        <item name="android:textCursorDrawable">@drawable/white_cursor</item>
     </style>
 
 </resources>

@@ -27,7 +27,7 @@ public class ThemNguoiDungActivity extends AppCompatActivity {
     Toolbar toolbar;
     NguoiDungDAO nguoiDungDAO;
     List<NguoiDung> listNguoiDung = new ArrayList<>();
-    NguoiDungAdapter nguoiDungAdapter = null;
+    NguoiDungAdapter nguoiDungAdapter = new NguoiDungAdapter();
     ListView lv_nguoiDung;
 
     @Override
@@ -36,6 +36,7 @@ public class ThemNguoiDungActivity extends AppCompatActivity {
         setContentView(R.layout.activity_them_nguoi_dung);
         lv_nguoiDung = findViewById(R.id.lv_nguoiDung);
         nguoiDungDAO = new NguoiDungDAO(ThemNguoiDungActivity.this);
+        init();
 
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -65,7 +66,6 @@ public class ThemNguoiDungActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-//        Toast.makeText(this, "Added", Toast.LENGTH_SHORT).show();
         String tenDangNhap = et_tenDangNhap.getText().toString();
         String matKhau = et_matKhau.getText().toString();
         String xacNhan = et_xacNhanMatKhau.getText().toString();
@@ -73,14 +73,15 @@ public class ThemNguoiDungActivity extends AppCompatActivity {
         String soDienThoai = et_soDienThoai.getText().toString();
         NguoiDung nguoiDung = new NguoiDung(tenDangNhap, matKhau, hoTen, soDienThoai);
         long i = nguoiDungDAO.insert(nguoiDung);
-        if (i >= 0) {
-            Toast.makeText(this, "Thêm dữ liệu thành công", Toast.LENGTH_SHORT).show();
+        nguoiDungAdapter.notifyDataSetChanged();
+        if (i > 0) {
+            Toast.makeText(this, "Thêm người dùng " + tenDangNhap.toUpperCase() + " thành công", Toast.LENGTH_SHORT).show();
             Intent intent = new Intent();
-//            intent.putExtra("NguoiDung", nguoiDung);
+            intent.putExtra("NguoiDung", nguoiDung);
             setResult(RESULT_OK, intent);
             finish();
         } else {
-            Toast.makeText(this, "Thêm dữ không liệu thành công", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Thêm người dùng không thành công", Toast.LENGTH_SHORT).show();
             finish();
         }
         return true;
