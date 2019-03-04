@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import com.example.trieunguyen.ps08327_mob204_asm.database.DbHelper;
 import com.example.trieunguyen.ps08327_mob204_asm.model.LoaiSach;
@@ -12,6 +13,7 @@ import com.example.trieunguyen.ps08327_mob204_asm.model.NguoiDung;
 import java.util.ArrayList;
 
 public class NguoiDungDAO {
+    private static final String TAG = "NguoiDungDAO";
     private DbHelper dbHelper;
     private SQLiteDatabase db;
 
@@ -52,15 +54,21 @@ public class NguoiDungDAO {
         }
     }
 
-    public long insert(NguoiDung nguoiDung) {
+    public int insert(NguoiDung nguoiDung) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put("username", nguoiDung.getUsername());
         values.put("password", nguoiDung.getPassword());
         values.put("phone", nguoiDung.getPhone());
         values.put("hoTen", nguoiDung.getPhone());
-        long rowPosition = db.insert(TABLE_NAME, null, values);
-        return rowPosition;
+        try {
+            if (db.insert(TABLE_NAME, null, values) == -1) {
+                return -1;
+            }
+        } catch (Exception ex) {
+            Log.e(TAG, ex.toString());
+        }
+        return 1;
     }
 
     public int update(NguoiDung nguoiDung) {
@@ -96,6 +104,7 @@ public class NguoiDungDAO {
             list.add(new NguoiDung(un, pw, phone, hoTen));
             cursor.moveToNext();
         }
+        cursor.close();
         return list;
     }
 

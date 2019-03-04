@@ -1,5 +1,7 @@
 package com.example.trieunguyen.ps08327_mob204_asm;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -66,24 +68,68 @@ public class ThemNguoiDungActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+
         String tenDangNhap = et_tenDangNhap.getText().toString();
         String matKhau = et_matKhau.getText().toString();
         String xacNhan = et_xacNhanMatKhau.getText().toString();
         String hoTen = et_hoTen.getText().toString();
         String soDienThoai = et_soDienThoai.getText().toString();
-        NguoiDung nguoiDung = new NguoiDung(tenDangNhap, matKhau, hoTen, soDienThoai);
-        long i = nguoiDungDAO.insert(nguoiDung);
-        nguoiDungAdapter.notifyDataSetChanged();
-        if (i > 0) {
-            Toast.makeText(this, "Thêm người dùng " + tenDangNhap.toUpperCase() + " thành công", Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent();
-            intent.putExtra("NguoiDung", nguoiDung);
-            setResult(RESULT_OK, intent);
-            finish();
-        } else {
-            Toast.makeText(this, "Thêm người dùng không thành công", Toast.LENGTH_SHORT).show();
-            finish();
+
+        long i = -1;
+        NguoiDung nguoiDung = null;
+        if (validForm(tenDangNhap, matKhau, xacNhan, hoTen, soDienThoai)) {
+            nguoiDung = new NguoiDung(tenDangNhap, matKhau, hoTen, soDienThoai);
+            i = nguoiDungDAO.insert(nguoiDung);
+            if (i > 0) {
+                Toast.makeText(this, "Thêm người dùng " + tenDangNhap.toUpperCase() + " thành công", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent();
+                intent.putExtra("NguoiDung", nguoiDung);
+                setResult(RESULT_OK, intent);
+                finish();
+            } else {
+                final AlertDialog alertDialog = new AlertDialog.Builder(ThemNguoiDungActivity.this).create();
+                alertDialog.setTitle("Chú ý!");
+                alertDialog.setMessage("Username đã tồn tại, vui lòng thay đổi!");
+                alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "OK", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        alertDialog.dismiss();
+                        et_tenDangNhap.requestFocus();
+                    }
+                });
+                alertDialog.show();
+            }
         }
+        return true;
+    }
+
+    private boolean validForm(String username, String pass, String confirm, String hoTen, String soDienThoai) {
+        try {
+            if (username.trim().length() == 0) {
+                et_tenDangNhap.requestFocus();
+                throw new Exception("Vui lòng nhập username");
+            }
+            if (pass.trim().length() == 0) {
+                et_matKhau.requestFocus();
+                throw new Exception("Vui lòng nhập password");
+            }
+            if (!confirm.equals(pass)) {
+                et_xacNhanMatKhau.requestFocus();
+                throw new Exception("Vui lòng xác nhận lại mật khẩu");
+            }
+            if (hoTen.trim().length() == 0) {
+                et_hoTen.requestFocus();
+                throw new Exception("Vui lòng nhập họ tên");
+            }
+            if (soDienThoai.trim().length() == 0) {
+                et_soDienThoai.requestFocus();
+                throw new Exception("Vui lòng nhập số điện thoại");
+            }
+
+        } catch (Exception e) {
+            Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
         return true;
     }
 }

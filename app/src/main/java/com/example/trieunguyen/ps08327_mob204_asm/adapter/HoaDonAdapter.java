@@ -34,24 +34,21 @@ import java.util.List;
 public class HoaDonAdapter extends BaseAdapter implements Filterable {
 
     Context context;
-    List<HoaDon> list;
+    ArrayList<HoaDon> list;
     ArrayList<HoaDon> listFull;
     public LayoutInflater inflater;
     HoaDonDAO hoaDonDAO;
     HoaDonChiTietDAO hoaDonChiTietDAO;
 
-    SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
     public HoaDonAdapter() {
     }
 
     public HoaDonAdapter(Context context, ArrayList<HoaDon> list) {
-        super();
         this.context = context;
         this.list = list;
-        this.listFull = listFull;
-        this.inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        hoaDonDAO = new HoaDonDAO(context);
+        this.listFull = new ArrayList<>(list);
         hoaDonChiTietDAO = new HoaDonChiTietDAO(context);
     }
 
@@ -179,8 +176,6 @@ public class HoaDonAdapter extends BaseAdapter implements Filterable {
             if (charSequence == null || charSequence.length() == 0) {
                 filteredList.addAll(listFull);
             } else {
-
-
                 for (HoaDon hdItem : listFull) {
                     String charString = charSequence.toString().toLowerCase();
                     if (hdItem.getMaHoaDon().toLowerCase().contains(charString)) {

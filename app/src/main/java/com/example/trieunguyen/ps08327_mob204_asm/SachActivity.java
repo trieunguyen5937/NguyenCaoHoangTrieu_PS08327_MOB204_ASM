@@ -30,6 +30,7 @@ import com.example.trieunguyen.ps08327_mob204_asm.model.Sach;
 import java.util.ArrayList;
 
 public class SachActivity extends AppCompatActivity {
+
     ListView lv_sach;
     RecyclerView rv_sach;
     ArrayList<Sach> listSach;
@@ -37,8 +38,6 @@ public class SachActivity extends AppCompatActivity {
     SachAdapter adapter;
     SachRecyclerViewAdapter recyclerViewAdapter;
     RecyclerView.LayoutManager layoutManager;
-
-    Boolean toggle = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,6 +74,7 @@ public class SachActivity extends AppCompatActivity {
         listSach = new ArrayList<>();
         sachDAO = new SachDAO(SachActivity.this);
         listSach = sachDAO.getAll();
+//        Toast.makeText(this, ""+listSach.size(), Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -128,21 +128,6 @@ public class SachActivity extends AppCompatActivity {
                 break;
         }
         return true;
-    }
-
-    private void timSach() {
-        final EditText et_searchField = findViewById(R.id.et_searchField);
-        //toggle để ẩn hiện search field
-        if (toggle == false) {
-            et_searchField.setVisibility(View.VISIBLE);
-            et_searchField.requestFocus();
-            toggle = true;
-        } else {
-            et_searchField.setVisibility(View.GONE);
-            toggle = false;
-        }
-
-        //hàm tìm kiếm
     }
 
     private boolean themSach() {

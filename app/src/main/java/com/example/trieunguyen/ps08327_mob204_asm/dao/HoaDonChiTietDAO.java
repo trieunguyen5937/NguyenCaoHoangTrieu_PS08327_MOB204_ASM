@@ -24,10 +24,13 @@ public class HoaDonChiTietDAO {
                     "maHDCT integer primary key autoincrement, " +
                     "maHoaDon text not null, " +
                     "maSach text not null, " +
-                    "soLuong int" +
+                    "soLuongMua integer" +
                     ");";
+//    public static final String strInsertHDCT1 = "Insert into " + TABLE_NAME +
+//            " Values('1', '1', '1', '1')";
+
     public static final String TAG = "HoaDonChiTiet";
-    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
     public HoaDonChiTietDAO(Context context) {
         dbHelper = new DbHelper(context);
@@ -38,7 +41,7 @@ public class HoaDonChiTietDAO {
         ContentValues values = new ContentValues();
         values.put("maHoaDon", hoaDonChiTiet.getHoaDon().getMaHoaDon());
         values.put("maSach", hoaDonChiTiet.getSach().getMaSach());
-        values.put("soLuong", hoaDonChiTiet.getSoLuongMua());
+        values.put("soLuongMua", hoaDonChiTiet.getSoLuongMua());
         try {
             if (db.insert(TABLE_NAME, null, values) == -1) {
                 return -1;
@@ -54,9 +57,8 @@ public class HoaDonChiTietDAO {
         values.put("maHDCT", hd.getMaHDCT());
         values.put("maHoaDon", hd.getHoaDon().getMaHoaDon());
         values.put("maSach", hd.getSach().getMaSach());
-        values.put("soLuong", hd.getSoLuongMua());
-        int result = db.update(TABLE_NAME, values, "maHDCT=?", new
-                String[]{String.valueOf(hd.getMaHDCT())});
+        values.put("soLuongMua", hd.getSoLuongMua());
+        int result = db.update(TABLE_NAME, values, "maHDCT=?", new String[]{String.valueOf(hd.getMaHDCT())});
         if (result == 0) {
             return -1;
         }
@@ -70,12 +72,12 @@ public class HoaDonChiTietDAO {
         return 1;
     }
 
-    public List<HoaDonChiTiet> getAllHoaDonChiTiet() {
-        List<HoaDonChiTiet> listHoaDonChiTiet = new ArrayList<>();
-        String sSQL = "SELECT maHDCT, HoaDon.maHoaDon, HoaDon.ngayMua, " +
-                "Sach.maSach, Sach.tenLoaiSach, Sach.tenSach, Sach.tacGia, Sach.NXB, Sach.giaBia, " +
-                "Sach.soLuong, HoaDonChiTiet.soLuong FROM HoaDonChiTiet INNER JOIN HoaDon " +
-                "on HoaDonChiTiet.maHoaDon = HoaDon.maHoaDon INNER JOIN Sach on Sach.maSach = HoaDonChiTiet.maSach ";
+    public ArrayList<HoaDonChiTiet> getAllHoaDonChiTiet() {
+        ArrayList<HoaDonChiTiet> listHoaDonChiTiet = new ArrayList<>();
+        String sSQL = "SELECT maHDCT, HOADON.maHoaDon, HOADON.ngayMua, " +
+                "SACH.maSach, SACH.tenLoaiSach, SACH.tenSach, SACH.tacGia, SACH.NXB, SACH.giaBia, " +
+                "SACH.soLuong, HOADONCHITIET.soLuongMua FROM HOADONCHITIET INNER JOIN HOADON " +
+                "on HOADONCHITIET.maHoaDon = HOADON.maHoaDon INNER JOIN SACH on SACH.maSach = HOADONCHITIET.maSach ";
         Cursor c = db.rawQuery(sSQL, null);
         c.moveToFirst();
         try {
@@ -97,22 +99,21 @@ public class HoaDonChiTietDAO {
         return listHoaDonChiTiet;
     }
 
-    public List<HoaDonChiTiet> getAllHoaDonChiTietByID(String maHoaDon) {
-        List<HoaDonChiTiet> listHoaDonChiTiet = new ArrayList<>();
-        String sSQL = "SELECT maHDCT, HoaDon.maHoaDon,HoaDon.ngayMua, " +
-                "Sach.maSach, Sach.tenLoaiSach, Sach.tenSach, Sach.tacGia, Sach.NXB, Sach.giaBia, " +
-                "Sach.soLuong, HoaDonChiTiet.soLuong FROM HoaDonChiTiet INNER JOIN HoaDon " +
-                "on HoaDonChiTiet.maHoaDon = HoaDon.maHoaDon INNER JOIN Sach " +
-                "on Sach.maSach = HoaDonChiTiet.maSach where HoaDonChiTiet.maHoaDon = '" + maHoaDon + "' ";
+    public ArrayList<HoaDonChiTiet> getAllHoaDonChiTietByID(String maHoaDon) {
+        ArrayList<HoaDonChiTiet> listHoaDonChiTiet = new ArrayList<>();
+        String sSQL = "SELECT maHDCT, HOADON.maHoaDon,HOADON.ngayMua, " +
+                "SACH.maSach, SACH.tenLoaiSach, SACH.tenSach, SACH.tacGia, SACH.NXB, SACH.giaBia, " +
+                "SACH.soLuong, HOADONCHITIET.soLuongMua FROM HOADONCHITIET INNER JOIN HOADON " +
+                "on HOADONCHITIET.maHoaDon = HOADON.maHoaDon INNER JOIN SACH " +
+                "on SACH.maSach = HOADONCHITIET.maSach where HOADONCHITIET.maHoaDon ='" + maHoaDon + "'";
         Cursor c = db.rawQuery(sSQL, null);
         c.moveToFirst();
         try {
-            while (c.isAfterLast() == false) {
+            while (!c.isAfterLast()) {
                 HoaDonChiTiet hoaDonChiTiet = new HoaDonChiTiet();
                 hoaDonChiTiet.setMaHDCT(c.getInt(0));
                 hoaDonChiTiet.setHoaDon(new HoaDon(c.getString(1), sdf.parse(c.getString(2))));
-                hoaDonChiTiet.setSach(new
-                        Sach(c.getString(3), c.getString(4), c.getString(5),
+                hoaDonChiTiet.setSach(new Sach(c.getString(3), c.getString(4), c.getString(5),
                         c.getString(6), c.getString(7), c.getInt(8), c.getInt(9)));
                 hoaDonChiTiet.setSoLuongMua(c.getInt(10));
                 listHoaDonChiTiet.add(hoaDonChiTiet);
@@ -135,8 +136,7 @@ public class HoaDonChiTietDAO {
         String[] selectionArgs = {maHoaDon};
         Cursor c = null;
         try {
-            c = db.query(TABLE_NAME, columns, selection, selectionArgs, null, null,
-                    null);
+            c = db.query(TABLE_NAME, columns, selection, selectionArgs, null, null, null);
             c.moveToFirst();
             int i = c.getCount();
             c.close();
@@ -150,52 +150,60 @@ public class HoaDonChiTietDAO {
         }
     }
 
-    public double getDoanhThuTheoNgay() {
+    public double getDoanhThuTheoNgay(String day) {
         double doanhThu = 0;
-        String sSQL = "SELECT SUM(tongTien) from (SELECT SUM(Sach.giaBia * HoaDonChiTiet.soLuong)as 'tongTien' " +
-                "FROM HoaDon INNER JOIN HoaDonChiTiet on HoaDon.maHoaDon = HoaDonChiTiet.maHoaDon " +
-                "INNER JOIN Sach on HoaDonChiTiet.maSach = Sach.maSach " +
-                "where HoaDon.ngayMua = date('now') GROUP BY HoaDonChiTiet.maSach)tmp ";
+        String sSQL = "SELECT SUM(SACH.giaBia * HOADONCHITIET.soLuongMua)as tongtien FROM HOADONCHITIET " +
+                "INNER JOIN HOADON on HOADONCHITIET.maHoaDon = HOADON.maHoaDon INNER JOIN SACH on SACH.maSach = HOADONCHITIET.maSach " +
+                "Where HOADON.ngayMua = '" + day + "'";
         Cursor c = db.rawQuery(sSQL, null);
         c.moveToFirst();
-        while (c.isAfterLast() == false) {
-            doanhThu = c.getDouble(0);
-            c.moveToNext();
+        try {
+            while (!c.isAfterLast()) {
+                doanhThu = c.getDouble(0);
+                c.moveToNext();
+            }
+            c.close();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        c.close();
         return doanhThu;
     }
 
-    public double getDoanhThuTheoThang() {
+    public double getDoanhThuTheoThang(String month) {
         double doanhThu = 0;
-        String sSQL = "SELECT SUM(tongtien) from (SELECT SUM(Sach.giaBia * HoaDonChiTiet.soLuong)as 'tongtien' " +
-                "FROM HoaDon INNER JOIN HoaDonChiTiet on HoaDon.maHoaDon = HoaDonChiTiet.maHoaDon " +
-                "INNER JOIN Sach on HoaDonChiTiet.maSach = Sach.maSach where strftime('%m', HoaDon.ngayMua) = strftime('%m', 'now') " +
-                "GROUP BY HoaDonChiTiet.maSach)tmp ";
+        String sSQL = "SELECT SUM(SACH.giaBia * HOADONCHITIET.soLuongMua)as tongtien FROM HOADONCHITIET " +
+                "INNER JOIN HOADON on HOADONCHITIET.maHoaDon = HOADON.maHoaDon INNER JOIN SACH on SACH.maSach = HOADONCHITIET.maSach " +
+                "Where HOADON.ngayMua like '%/" + month + "/2019'";
         Cursor c = db.rawQuery(sSQL, null);
         c.moveToFirst();
-        while (c.isAfterLast() == false) {
-            doanhThu = c.getDouble(0);
-            c.moveToNext();
+        try {
+            while (!c.isAfterLast()) {
+                doanhThu = c.getDouble(0);
+                c.moveToNext();
+            }
+            c.close();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        c.close();
         return doanhThu;
     }
 
     public double getDoanhThuTheoNam() {
         double doanhThu = 0;
-        String sSQL = "SELECT SUM(tongtien) from (SELECT SUM(Sach.giaBia * HoaDonChiTiet.soLuong)as 'tongtien' " +
-                "FROM HoaDon INNER JOIN HoaDonChiTiet on HoaDon.maHoaDon = HoaDonChiTiet.maHoaDon " +
-                "INNER JOIN Sach on HoaDonChiTiet.maSach = Sach.maSach " +
-                "where strftime('%Y', HoaDon.ngayMua) = strftime('%Y', 'now') " +
-                "GROUP BY HoaDonChiTiet.maSach)tmp ";
+        String sSQL = "SELECT SUM(SACH.giaBia * HoaDonChiTiet.soLuongMua)as tongtien FROM HOADONCHITIET " +
+                "INNER JOIN HOADON on HOADONCHITIET.maHoaDon = HOADON.maHoaDon INNER JOIN SACH on SACH.maSach = HOADONCHITIET.maSach " +
+                "Where HOADON.ngayMua like '%/%/2019'";
         Cursor c = db.rawQuery(sSQL, null);
         c.moveToFirst();
-        while (c.isAfterLast() == false) {
-            doanhThu = c.getDouble(0);
-            c.moveToNext();
+        try {
+            while (!c.isAfterLast()) {
+                doanhThu = c.getDouble(0);
+                c.moveToNext();
+            }
+            c.close();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        c.close();
         return doanhThu;
     }
 }

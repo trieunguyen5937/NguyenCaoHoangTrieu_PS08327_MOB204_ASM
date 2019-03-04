@@ -32,6 +32,10 @@ public class DbHelper extends SQLiteOpenHelper {
         db.execSQL(SachDAO.SQL_SACH);
         db.execSQL(SachDAO.strInsertS1);
         db.execSQL(SachDAO.strInsertS2);
+        db.execSQL(SachDAO.strInsertS3);
+        db.execSQL(SachDAO.strInsertS4);
+        db.execSQL(SachDAO.strInsertS5);
+        db.execSQL(SachDAO.strInsertS6);
 
         db.execSQL(HoaDonDAO.SQL_HOA_DON);
         db.execSQL(HoaDonChiTietDAO.SQL_HOA_DON_CHI_TIET);

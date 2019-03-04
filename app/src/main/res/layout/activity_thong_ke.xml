@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#FFF5EE"
     android:orientation="vertical"
     tools:context=".ThongKeActivity">
 
@@ -11,11 +12,29 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
+        android:layout_marginBottom="15dp"
         android:background="#D2691E"
         android:elevation="4dp"
         android:gravity="center"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Ngày hiện tại: "
+        android:textSize="20dp" />
+
+    <TextView
+        android:id="@+id/tv_today"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:gravity="center"
+        android:textColor="#58D68D"
+        android:hint="dd//mm/yyy"
+        android:textSize="18dp" />
 
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
@@ -37,17 +56,17 @@
                 android:gravity="center"
                 android:hint="Hôm nay:"
                 android:padding="20dp"
-                android:textSize="20dp" />
+                android:textSize="18dp" />
 
             <TextView
-                android:id="@+id/tv_homNay_amount"
+                android:id="@+id/tv_homNay"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="left"
                 android:hint="0"
                 android:padding="15dp"
-                android:textSize="20dp" />
+                android:textSize="18dp" />
         </LinearLayout>
     </android.support.v7.widget.CardView>
 
@@ -72,10 +91,10 @@
                 android:padding="20dp"
                 android:text="Tháng này:"
                 android:textColor="#CD5C5C"
-                android:textSize="20dp" />
+                android:textSize="18dp" />
 
             <TextView
-                android:id="@+id/tv_thangNay_amount"
+                android:id="@+id/tv_thangNay"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -83,7 +102,7 @@
                 android:padding="20dp"
                 android:text="0"
                 android:textColor="#CD5C5C"
-                android:textSize="20dp" />
+                android:textSize="18dp" />
         </LinearLayout>
     </android.support.v7.widget.CardView>
 
@@ -106,12 +125,12 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:padding="20dp"
-                android:text="Năm này:"
+                android:text="Năm nay:"
                 android:textColor="#1E90FF"
-                android:textSize="20dp" />
+                android:textSize="18dp" />
 
             <TextView
-                android:id="@+id/tv_namNay_amount"
+                android:id="@+id/tv_namNay"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -119,7 +138,7 @@
                 android:padding="20dp"
                 android:text="0"
                 android:textColor="#1E90FF"
-                android:textSize="20dp" />
+                android:textSize="18dp" />
         </LinearLayout>
     </android.support.v7.widget.CardView>
 

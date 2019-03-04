@@ -1,5 +1,7 @@
 package com.example.trieunguyen.ps08327_mob204_asm;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -68,19 +70,65 @@ public class ThemLoaiSachActivity extends AppCompatActivity {
         String maLoai = et_maLoaiSach.getText().toString();
         String tenLoai = et_tenLoaiSach.getText().toString();
         String moTa = et_moTa.getText().toString();
-        int viTri = Integer.parseInt(et_viTri.getText().toString());
-        LoaiSach loaiSach = new LoaiSach(maLoai, tenLoai, moTa, viTri);
-        long i = loaiSachDAO.insert(loaiSach);
-        if (i > 0) {
-            Toast.makeText(this, "Thêm loại sách " + tenLoai.toUpperCase() + " thành công", Toast.LENGTH_LONG).show();
-            Intent intent = new Intent();
-            intent.putExtra("LoaiSach", loaiSach);
-            setResult(RESULT_OK, intent);
-            finish();
-        } else {
-            Toast.makeText(this, "Thêm loại sách mới không thành công", Toast.LENGTH_SHORT).show();
-            finish();
+        String viTri = et_viTri.getText().toString();
+        long i = -1;
+        LoaiSach loaiSach = null;
+        if (validForm(maLoai, tenLoai, moTa, viTri)) {
+            int vt = Integer.parseInt(viTri);
+            loaiSach = new LoaiSach(maLoai, tenLoai, moTa, vt);
+            i = loaiSachDAO.insert(loaiSach);
+            if (i > 0) {
+                Toast.makeText(this, "Thêm loại sách " + tenLoai.toUpperCase() + " thành công", Toast.LENGTH_LONG).show();
+                Intent intent = new Intent();
+                intent.putExtra("LoaiSach", loaiSach);
+                setResult(RESULT_OK, intent);
+                finish();
+            } else {
+                final AlertDialog alertDialog = new AlertDialog.Builder(ThemLoaiSachActivity.this).create();
+                alertDialog.setTitle("Chú ý!");
+                alertDialog.setMessage("Mã loại sách đã tồn tại!");
+                alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "OK", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        alertDialog.dismiss();
+                        et_maLoaiSach.requestFocus();
+                    }
+                });
+                alertDialog.show();
+            }
         }
+        return true;
+    }
+
+    private boolean validForm(String maLoai, String tenLoai, String moTa, String viTri) {
+        try {
+            if (maLoai.trim().length() == 0) {
+                et_maLoaiSach.requestFocus();
+                throw new Exception("Vui lòng nhập mã loại");
+            }
+            if (tenLoai.trim().length() == 0) {
+                et_tenLoaiSach.requestFocus();
+                throw new Exception("Vui lòng nhập tên loại");
+            }
+            if (moTa.trim().length() == 0) {
+                et_moTa.requestFocus();
+                throw new Exception("Vui lòng nhập mô tả");
+            }
+            if (viTri.trim().length() == 0) {
+                et_viTri.requestFocus();
+                throw new Exception("Vui lòng nhập vị trí");
+            }
+
+            int vt = Integer.parseInt(viTri.trim());
+            if (vt < 0) {
+                throw new Exception("Vị trí không được là số âm");
+            }
+        } catch (NumberFormatException e) {
+            Toast.makeText(this, "Vị trí phải là số", Toast.LENGTH_SHORT).show();
+        } catch (Exception e) {
+            Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
         return true;
     }
 }

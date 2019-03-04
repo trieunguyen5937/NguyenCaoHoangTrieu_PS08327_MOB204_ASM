@@ -30,14 +30,18 @@
                 <action android:name="android.intent.action.SEARCH" />
             </intent-filter>
         </activity>
-        <activity android:name=".HoaDonActivity" />
+        <activity android:name=".HoaDonActivity" android:parentActivityName=".MainActivity"/>
         <activity android:name=".NguoiDungActivity" />
-        <activity android:name=".BanChayActivity" />
-        <activity android:name=".ThemLoaiSachActivity" />
+        <activity android:name=".BanChayActivity" >
+            <intent-filter>
+                <action android:name="android.intent.action.SEARCH" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".ThemLoaiSachActivity"/>
         <activity android:name=".DoiMatKhauActivity" />
         <activity android:name=".ThemNguoiDungActivity" />
         <activity android:name=".ThemSachActivity" />
-        <activity android:name=".ThemHoaDonChiTietActivity" />
+        <activity android:name=".ThemHoaDonChiTietActivity" android:parentActivityName=".HoaDonActivity"/>
     </application>
 
 </manifest>

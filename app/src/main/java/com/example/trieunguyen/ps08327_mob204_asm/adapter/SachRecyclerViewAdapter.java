@@ -142,7 +142,7 @@ public class SachRecyclerViewAdapter extends RecyclerView.Adapter<SachRecyclerVi
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-                //GÁN XML CHO MENU
+                //GÁN LAYOUT CHO MENU
                 popupMenu.inflate(R.menu.context_menu_sach);
                 //TẠO SỰ KIỆN
                 popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
@@ -220,49 +220,59 @@ public class SachRecyclerViewAdapter extends RecyclerView.Adapter<SachRecyclerVi
                                 bt_update.setOnClickListener(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View view) {
-                                        sach.setMaSach(et_maSach.getText().toString());
+                                        String tacGiaMoi = et_tacGia.getText().toString();
+                                        String nxbMoi = et_NXB.getText().toString();
+                                        String giaBiaMoi = et_giaBia.getText().toString();
+                                        String soLuongMoi = et_soLuong.getText().toString();
 
-                                        int index = (int) sp_tenLoaiSach.getSelectedItemId();
-                                        final LoaiSach loaiSach = listLoaiSach.get(index);
-                                        loaiSach.setTen(loaiSach.getTen());
+                                        if (validForm(tacGiaMoi, nxbMoi, giaBiaMoi, soLuongMoi)) {
+                                            int giabiamoi = Integer.parseInt(giaBiaMoi);
+                                            int soluongmoi = Integer.parseInt(soLuongMoi);
 
-                                        sach.setTacGia(et_tacGia.getText().toString());
-                                        sach.setNXB(et_NXB.getText().toString());
-                                        sach.setGiaBia(Integer.parseInt(et_giaBia.getText().toString()));
-                                        sach.setSoLuong(Integer.parseInt(et_soLuong.getText().toString()));
+                                            sach.setMaSach(et_maSach.getText().toString());
 
-                                        final SachDAO sachDAO = new SachDAO(context);
-                                        sachDAO.update(sach);
-                                        listSach = sachDAO.getAll();
-                                        notifyDataSetChanged();
-                                        myDialog.dismiss();
+                                            int index = (int) sp_tenLoaiSach.getSelectedItemId();
+                                            final LoaiSach loaiSach = listLoaiSach.get(index);
+                                            loaiSach.setTen(loaiSach.getTen());
 
-                                        Snackbar snackbar = Snackbar.make(holder.itemView, "Đã cập nhật sách", 4000);
-                                        snackbar.setAction("Hoàn tác", new View.OnClickListener() {
-                                            @Override
-                                            public void onClick(View view) {
-                                                sach.setMaSach(maSachCu);
-                                                sach.setTenLoaiSach(tenLoaiSachCu);
-                                                sach.setTacGia(tacGiaCu);
-                                                sach.setNXB(nxbCu);
-                                                sach.setGiaBia(giaCu);
-                                                sach.setSoLuong(soLuongCu);
-                                                sachDAO.update(sach);
-                                                listSach = sachDAO.getAll();
-                                                notifyDataSetChanged();
-                                                Toast.makeText(context, "Đã hoàn tác cập nhật", Toast.LENGTH_SHORT).show();
-                                            }
-                                        });
-                                        //SET MÀU CHỮ THÔNG BÁO
-                                        View sView = snackbar.getView();
-                                        TextView tv = sView.findViewById(android.support.design.R.id.snackbar_text);
-                                        tv.setTextColor(Color.BLACK);
-                                        tv.setTextSize(16);
-                                        //SET MÀU BACKGROUND SNACKBAR
-                                        sView.setBackgroundColor(ContextCompat.getColor(context, R.color.snackbarBackground));
-                                        //SET MÀU CHỮ NÚT ACTION
-                                        snackbar.setActionTextColor(Color.RED);
-                                        snackbar.show();
+                                            sach.setTacGia(tacGiaMoi);
+                                            sach.setNXB(nxbMoi);
+                                            sach.setGiaBia(giabiamoi);
+                                            sach.setSoLuong(soluongmoi);
+
+                                            final SachDAO sachDAO = new SachDAO(context);
+                                            sachDAO.update(sach);
+                                            listSach = sachDAO.getAll();
+                                            notifyDataSetChanged();
+                                            myDialog.dismiss();
+
+                                            Snackbar snackbar = Snackbar.make(holder.itemView, "Đã cập nhật sách", 4000);
+                                            snackbar.setAction("Hoàn tác", new View.OnClickListener() {
+                                                @Override
+                                                public void onClick(View view) {
+                                                    sach.setMaSach(maSachCu);
+                                                    sach.setTenLoaiSach(tenLoaiSachCu);
+                                                    sach.setTacGia(tacGiaCu);
+                                                    sach.setNXB(nxbCu);
+                                                    sach.setGiaBia(giaCu);
+                                                    sach.setSoLuong(soLuongCu);
+                                                    sachDAO.update(sach);
+                                                    listSach = sachDAO.getAll();
+                                                    notifyDataSetChanged();
+                                                    Toast.makeText(context, "Đã hoàn tác cập nhật", Toast.LENGTH_SHORT).show();
+                                                }
+                                            });
+                                            //SET MÀU CHỮ THÔNG BÁO
+                                            View sView = snackbar.getView();
+                                            TextView tv = sView.findViewById(android.support.design.R.id.snackbar_text);
+                                            tv.setTextColor(Color.BLACK);
+                                            tv.setTextSize(16);
+                                            //SET MÀU BACKGROUND SNACKBAR
+                                            sView.setBackgroundColor(ContextCompat.getColor(context, R.color.snackbarBackground));
+                                            //SET MÀU CHỮ NÚT ACTION
+                                            snackbar.setActionTextColor(Color.RED);
+                                            snackbar.show();
+                                        }
                                     }
                                 });
 
@@ -362,8 +372,6 @@ public class SachRecyclerViewAdapter extends RecyclerView.Adapter<SachRecyclerVi
             if (charSequence == null || charSequence.length() == 0) {
                 filteredList.addAll(listSachFull);
             } else {
-
-
                 for (Sach sachItem : listSachFull) {
                     String charString = charSequence.toString().toLowerCase();
                     if (sachItem.getTenSach().toLowerCase().contains(charString) || sachItem.getTenSach().toLowerCase().contains(charString)) {
@@ -382,4 +390,42 @@ public class SachRecyclerViewAdapter extends RecyclerView.Adapter<SachRecyclerVi
             notifyDataSetChanged();
         }
     };
+
+    private boolean validForm(String tacGia, String nxb, String giaBia, String soLuong) {
+        try {
+            if (tacGia.trim().length() == 0) {
+                et_tacGia.requestFocus();
+                throw new Exception("Vui lòng nhập tác giả");
+            }
+            if (nxb.trim().length() == 0) {
+                et_NXB.requestFocus();
+                throw new Exception("Vui lòng nhập NXB");
+            }
+            if (giaBia.trim().length() == 0) {
+                et_giaBia.requestFocus();
+                throw new Exception("Vui lòng nhập giá bìa");
+            }
+            int giabia = Integer.parseInt(giaBia.trim());
+            if (giabia < 0) {
+                et_giaBia.requestFocus();
+                throw new Exception("Giá bìa không được là số âm");
+            }
+            if (soLuong.trim().length() == 0) {
+                et_soLuong.requestFocus();
+                throw new Exception("Vui lòng nhập số lượng");
+            }
+            int soluong = Integer.parseInt(soLuong.trim());
+            if (soluong < 0) {
+                et_soLuong.requestFocus();
+                throw new Exception("Số lượng không được là số âm");
+            }
+        } catch (NumberFormatException e) {
+            Toast.makeText(context, "Giá bìa và số lượng phải là số", Toast.LENGTH_SHORT).show();
+        } catch (Exception e) {
+            Toast.makeText(context, e.getMessage(), Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        return true;
+    }
 }

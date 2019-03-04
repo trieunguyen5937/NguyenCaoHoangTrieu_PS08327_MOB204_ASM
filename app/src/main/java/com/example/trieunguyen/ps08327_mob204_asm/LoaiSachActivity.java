@@ -64,7 +64,7 @@ public class LoaiSachActivity extends AppCompatActivity {
 
         lv_loaiSach.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(final AdapterView<?> adapterView, View view, int i, long l) {
+            public void onItemClick(final AdapterView<?> adapterView, View view, final int i, long l) {
                 final AlertDialog.Builder updateDialog = new AlertDialog.Builder(LoaiSachActivity.this);
                 LayoutInflater inflater = getLayoutInflater();
                 final View v = inflater.inflate(R.layout.update_loaisach_dialog, null);
@@ -123,41 +123,50 @@ public class LoaiSachActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View view) {
 
-                        loaiSach.setMa(et_maLoaiSach.getText().toString());
-                        loaiSach.setTen(et_tenLoaiSach.getText().toString());
-                        loaiSach.setMota(et_moTa.getText().toString());
-                        loaiSach.setVitri(Integer.parseInt(et_viTri.getText().toString()));
+                        String tenMoi = et_tenLoaiSach.getText().toString();
+                        String moTaMoi = et_moTa.getText().toString();
+                        String viTriMoi = et_viTri.getText().toString();
 
-                        final LoaiSachDAO loaiSachDAO = new LoaiSachDAO(LoaiSachActivity.this);
-                        loaiSachDAO.update(loaiSach);
-                        listLoaiSach = loaiSachDAO.getAll();
-                        adapter.notifyDataSetChanged();
-                        myDialog.dismiss();
+                        if (validForm(tenMoi, moTaMoi, viTriMoi)) {
+                            int vitrimoi = Integer.parseInt(viTriMoi);
 
-                        Snackbar snackbar = Snackbar.make(adapterView, "Đã cập nhật loại sách", 4000);
-                        snackbar.setAction("Hoàn tác", new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                loaiSach.setMa(maCu);
-                                loaiSach.setTen(tenLoaiCu);
-                                loaiSach.setMota(moTaCu);
-                                loaiSach.setVitri(viTriCu);
-                                loaiSachDAO.update(loaiSach);
-                                listLoaiSach = loaiSachDAO.getAll();
-                                adapter.notifyDataSetChanged();
-                                Toast.makeText(LoaiSachActivity.this, "Đã hoàn tác cập nhật", Toast.LENGTH_SHORT).show();
-                            }
-                        });
-                        //SET MÀU CHỮ THÔNG BÁO
-                        View sView = snackbar.getView();
-                        TextView tv = sView.findViewById(android.support.design.R.id.snackbar_text);
-                        tv.setTextColor(Color.BLACK);
-                        tv.setTextSize(16);
-                        //SET MÀU BACKGROUND SNACKBAR
-                        sView.setBackgroundColor(ContextCompat.getColor(LoaiSachActivity.this, R.color.snackbarBackground));
-                        //SET MÀU CHỮ NÚT ACTION
-                        snackbar.setActionTextColor(Color.RED);
-                        snackbar.show();
+                            loaiSach.setMa(maCu);
+                            loaiSach.setTen(tenMoi);
+                            loaiSach.setMota(moTaMoi);
+                            loaiSach.setVitri(vitrimoi);
+
+                            final LoaiSachDAO loaiSachDAO = new LoaiSachDAO(LoaiSachActivity.this);
+                            loaiSachDAO.update(loaiSach);
+                            listLoaiSach = loaiSachDAO.getAll();
+                            adapter.notifyDataSetChanged();
+                            myDialog.dismiss();
+                            lv_loaiSach.smoothScrollToPosition(i);
+
+                            Snackbar snackbar = Snackbar.make(adapterView, "Đã cập nhật loại sách", 4000);
+                            snackbar.setAction("Hoàn tác", new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    loaiSach.setMa(maCu);
+                                    loaiSach.setTen(tenLoaiCu);
+                                    loaiSach.setMota(moTaCu);
+                                    loaiSach.setVitri(viTriCu);
+                                    loaiSachDAO.update(loaiSach);
+                                    listLoaiSach = loaiSachDAO.getAll();
+                                    adapter.notifyDataSetChanged();
+                                    Toast.makeText(LoaiSachActivity.this, "Đã hoàn tác cập nhật", Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                            //SET MÀU CHỮ THÔNG BÁO
+                            View sView = snackbar.getView();
+                            TextView tv = sView.findViewById(android.support.design.R.id.snackbar_text);
+                            tv.setTextColor(Color.BLACK);
+                            tv.setTextSize(16);
+                            //SET MÀU BACKGROUND SNACKBAR
+                            sView.setBackgroundColor(ContextCompat.getColor(LoaiSachActivity.this, R.color.snackbarBackground));
+                            //SET MÀU CHỮ NÚT ACTION
+                            snackbar.setActionTextColor(Color.RED);
+                            snackbar.show();
+                        }
                     }
                 });
 
@@ -230,6 +239,35 @@ public class LoaiSachActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         Intent intent = new Intent(this, ThemLoaiSachActivity.class);
         startActivityForResult(intent, 999);
+        return true;
+    }
+
+    private boolean validForm(String tenLoai, String moTa, String viTri) {
+        try {
+            if (tenLoai.trim().length() == 0) {
+                et_tenLoaiSach.requestFocus();
+                throw new Exception("Vui lòng nhập tên loại");
+            }
+            if (moTa.trim().length() == 0) {
+                et_moTa.requestFocus();
+                throw new Exception("Vui lòng nhập mô tả");
+            }
+            if (viTri.trim().length() == 0) {
+                et_viTri.requestFocus();
+                throw new Exception("Vui lòng nhập vị trí");
+            }
+
+            int vt = Integer.parseInt(viTri.trim());
+            if (vt < 0) {
+                throw new Exception("Vị trí không được là số âm");
+            }
+        } catch (NumberFormatException e) {
+            Toast.makeText(this, "Vị trí phải là số", Toast.LENGTH_SHORT).show();
+        } catch (Exception e) {
+            Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
         return true;
     }
 }

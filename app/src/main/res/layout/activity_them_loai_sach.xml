@@ -58,6 +58,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:hint="Vị trí"
+        android:inputType="number"
         android:textSize="18dp" />
 
 </LinearLayout>

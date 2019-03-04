@@ -20,7 +20,7 @@ public class HoaDonDAO {
     public static final String TABLE_NAME = "HOADON";
     public static final String SQL_HOA_DON =
             "CREATE TABLE " + TABLE_NAME + "(" +
-                    "maHoaDon text primary key," +
+                    "maHoaDon text primary key, " +
                     "ngayMua date" +
                     ");";
     public static final String TAG = "HoaDonDAO";
@@ -48,11 +48,15 @@ public class HoaDonDAO {
     public int updateHoaDon(HoaDon hoaDon) {
         ContentValues values = new ContentValues();
         values.put("maHoaDon", hoaDon.getMaHoaDon());
-        values.put("ngayMua", hoaDon.getNgayMua().toString());
-        int result = db.update(TABLE_NAME, values, "maHoaDon=?", new
-                String[]{hoaDon.getMaHoaDon()});
-        if (result == 0) {
-            return -1;
+        values.put("ngayMua", sdf.format(hoaDon.getNgayMua()));
+        try {
+            int result = db.update(TABLE_NAME, values, "maHoaDon=?", new
+                    String[]{hoaDon.getMaHoaDon()});
+            if (result == 0) {
+                return -1;
+            }
+        } catch (Exception e) {
+            Log.e(TAG, e.toString());
         }
         return 1;
     }
@@ -64,7 +68,7 @@ public class HoaDonDAO {
         return 1;
     }
 
-    public List<HoaDon> getAllHoaDon() throws ParseException {
+    public ArrayList<HoaDon> getAllHoaDon() throws ParseException {
         ArrayList<HoaDon> listHoaDon = new ArrayList<>();
         Cursor c = db.rawQuery("Select * from " + TABLE_NAME, null);
         c.moveToFirst();

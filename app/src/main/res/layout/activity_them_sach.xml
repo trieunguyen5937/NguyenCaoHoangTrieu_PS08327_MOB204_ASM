@@ -85,6 +85,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:hint="Giá bìa"
+        android:inputType="number"
         android:textSize="18dp" />
 
     <com.example.trieunguyen.ps08327_mob204_asm.utilities.ClearableEditText
@@ -93,6 +94,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:hint="Số lượng"
+        android:inputType="number"
         android:textSize="18dp" />
 
 </LinearLayout>

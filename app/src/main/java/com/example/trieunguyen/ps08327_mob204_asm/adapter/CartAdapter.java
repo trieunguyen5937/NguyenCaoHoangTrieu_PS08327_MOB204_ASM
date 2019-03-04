@@ -1,5 +1,6 @@
 package com.example.trieunguyen.ps08327_mob204_asm.adapter;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -13,13 +14,19 @@ import com.example.trieunguyen.ps08327_mob204_asm.R;
 import com.example.trieunguyen.ps08327_mob204_asm.dao.HoaDonChiTietDAO;
 import com.example.trieunguyen.ps08327_mob204_asm.model.HoaDonChiTiet;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class CartAdapter extends BaseAdapter {
     ArrayList<HoaDonChiTiet> arrHoaDonChiTiet;
     public Activity context;
     public LayoutInflater inflater;
     HoaDonChiTietDAO hoaDonChiTietDAO;
+    //ĐỊNH DẠNG TIỀN
+    long vnd1, vnd2;
+    Locale localeVN = new Locale("vi", "VN");
+    NumberFormat currencyVN = NumberFormat.getCurrencyInstance(localeVN);
 
     public CartAdapter(Activity context, ArrayList<HoaDonChiTiet> arrayHoaDonChiTiet) {
         super();
@@ -44,6 +51,7 @@ public class CartAdapter extends BaseAdapter {
         return 0;
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
         ViewHolder holder;
@@ -69,11 +77,17 @@ public class CartAdapter extends BaseAdapter {
         } else
             holder = (ViewHolder) convertView.getTag();
 
-        HoaDonChiTiet _entry = (HoaDonChiTiet) arrHoaDonChiTiet.get(position);
+        HoaDonChiTiet _entry = arrHoaDonChiTiet.get(position);
         holder.tv_maSach.setText("Mã sách: " + _entry.getSach().getMaSach());
         holder.tv_soLuong.setText("Số lượng: " + _entry.getSoLuongMua());
-        holder.tv_giaBia.setText("Giá bìa: " + _entry.getSach().getGiaBia() + " VND");
-        holder.tv_thanhTien.setText("Thành tiền: " + _entry.getSoLuongMua() * _entry.getSach().getGiaBia() + " VND");
+        //
+        vnd1 = _entry.getSach().getGiaBia();
+        String giaBia = currencyVN.format(vnd1);
+        holder.tv_giaBia.setText("Giá bìa: " + giaBia);
+        //
+        vnd2 = _entry.getSoLuongMua() * _entry.getSach().getGiaBia();
+        String thanhTien = currencyVN.format(vnd2);
+        holder.tv_thanhTien.setText("Thành tiền: " + thanhTien);
         return convertView;
     }
 

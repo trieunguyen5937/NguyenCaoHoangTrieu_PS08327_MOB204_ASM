@@ -32,6 +32,15 @@ public class SachDAO {
             " Values('1', 'CNTT', 'Android nâng cao', 'Trieu Nguyen', 'NXB Trẻ', 50000, 5)";
     public static final String strInsertS2 = "Insert into " + TABLE_NAME +
             " Values('2', 'MOBILE', 'Dự án Android', 'Trieu Nguyen', 'NXB FPT', 65000, 10)";
+    public static final String strInsertS3 = "Insert into " + TABLE_NAME +
+            " Values('3', 'CNTT', 'HTML5 & CSS3', 'Trieu Nguyen', 'NXB FPT', 59000, 10)";
+    public static final String strInsertS4 = "Insert into " + TABLE_NAME +
+            " Values('4', 'MOBILE', 'Cơ sở dữ liệu', 'Trieu Nguyen', 'NXB FPT', 65000, 10)";
+    public static final String strInsertS5 = "Insert into " + TABLE_NAME +
+            " Values('5', 'CNTT', 'Android nâng cao', 'Trieu Nguyen', 'NXB Trẻ', 50000, 5)";
+    public static final String strInsertS6 = "Insert into " + TABLE_NAME +
+            " Values('6', 'MOBILE', 'Tin học văn phòng', 'Trieu Nguyen', 'NXB FPT', 65000, 10)";
+
 
     public SachDAO(Context context) {
         dbHelper = new DbHelper(context);
@@ -48,20 +57,27 @@ public class SachDAO {
         values.put("NXB", sach.getNXB());
         values.put("giaBia", sach.getGiaBia());
         values.put("soLuong", sach.getSoLuong());
-        if (checkPrimaryKey(sach.getMaSach())) {
-            int result = db.update(TABLE_NAME, values, "masach=?", new
-                    String[]{sach.getMaSach()});
-            if (result == 0) {
+//        if (checkPrimaryKey(sach.getMaSach())) {
+//            int result = db.update(TABLE_NAME, values, "masach=?", new String[]{sach.getMaSach()});
+//            if (result == 0) {
+//                return -1;
+//            }
+//        } else {
+//            try {
+//                if (db.insert(TABLE_NAME, null, values) == -1) {
+//                    return -1;
+//                }
+//            } catch (Exception ex) {
+//                Log.e(TAG, ex.toString());
+//            }
+//        }
+//        return 1;
+        try {
+            if (db.insert(TABLE_NAME, null, values) == -1) {
                 return -1;
             }
-        } else {
-            try {
-                if (db.insert(TABLE_NAME, null, values) == -1) {
-                    return -1;
-                }
-            } catch (Exception ex) {
-                Log.e(TAG, ex.toString());
-            }
+        } catch (Exception ex) {
+            Log.e(TAG, ex.toString());
         }
         return 1;
     }
@@ -109,6 +125,7 @@ public class SachDAO {
                 list.add(sach);
             } while (cursor.moveToNext());
         }
+        cursor.close();
         return list;
     }
 
@@ -150,8 +167,7 @@ public class SachDAO {
         String[] selectionArgs = {strPrimaryKey};
         Cursor c = null;
         try {
-            c = db.query(TABLE_NAME, columns, selection, selectionArgs, null, null,
-                    null);
+            c = db.query(TABLE_NAME, columns, selection, selectionArgs, null, null, null);
             c.moveToFirst();
             while (c.isAfterLast() == false) {
                 s.setMaSach(c.getString(0));
@@ -177,13 +193,13 @@ public class SachDAO {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
         Sach s = null;
         //WHERE clause
-        String selection = "masach=?";
+        String selection = "maSach=?";
         //WHERE clause arguments
         String[] selectionArgs = {maSach};
         Cursor c = db.query(TABLE_NAME, null, selection, selectionArgs, null, null, null);
-        Log.d("getSachByID", "===>" + c.getCount());
+        Log.d("getSachById", "===>" + c.getCount());
         c.moveToFirst();
-        while (c.isAfterLast() == false) {
+        while (!c.isAfterLast()) {
             s = new Sach();
             s.setMaSach(c.getString(0));
             s.setTenLoaiSach(c.getString(1));
@@ -199,19 +215,19 @@ public class SachDAO {
     }
 
     //search top 10
-    public List<Sach> getSachTop10(String month) {
+    public ArrayList<Sach> getSachTop10(String month) {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
-        List<Sach> dsSach = new ArrayList<>();
-        if (Integer.parseInt(month) < 10) {
-            month = "0" + month;
-        }
-        String sSQL = "SELECT maSach, SUM(soLuong) as soluong FROM HoaDonChiTiet INNER JOIN HoaDon " +
-                "ON HoaDon.maHoaDon = HoaDonChiTiet.maHoaDon WHERE strftime('%m', HoaDon.ngayMua) = '" + month + "' " +
-                "GROUP BY maSach ORDER BY soluong DESC LIMIT 10";
+        ArrayList<Sach> dsSach = new ArrayList<>();
+//        if (Integer.parseInt(month) < 10) {
+//            month = "0" + month;
+//        }
+        String sSQL = "SELECT maSach, SUM(soLuongMua) as soluongmua FROM HOADONCHITIET INNER JOIN HOADON " +
+                "ON HOADON.maHoaDon = HOADONCHITIET.maHoaDon WHERE HOADON.ngayMua like '%/" + month + "/2019' " +
+                "GROUP BY maSach ORDER BY soluongmua DESC LIMIT 3";
         Cursor c = db.rawQuery(sSQL, null);
         c.moveToFirst();
-        while (c.isAfterLast() == false) {
-            Log.d("//=====", c.getString(0));
+        while (!c.isAfterLast()) {
+//            Log.d("//=====", c.getString(0));
             Sach s = new Sach();
             s.setMaSach(c.getString(0));
             s.setSoLuong(c.getInt(1));

@@ -4,9 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFF5EE"
     android:orientation="vertical"
-    tools:context=".HoaDonActivity">
+    android:background="#FFF5EE"
+    android:id="@+id/parent_layout"
+    tools:context=".HoaDonChiTietItemsActivity">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
@@ -19,8 +20,9 @@
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
     <ListView
-        android:id="@+id/lv_hoaDon"
+        android:id="@+id/lv_listview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="10dp" />
+
 </LinearLayout>

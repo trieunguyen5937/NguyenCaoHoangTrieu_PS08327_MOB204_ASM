@@ -1,6 +1,5 @@
 package com.example.trieunguyen.ps08327_mob204_asm;
 
-
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -130,42 +129,48 @@ public class NguoiDungActivity extends AppCompatActivity {
                 bt_update.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+                        String passMoi = et_password.getText().toString();
+                        String hoTenMoi = et_hoTen.getText().toString();
+                        String phoneMoi = et_phone.getText().toString();
 
-                        nguoiDung.setPassword(et_password.getText().toString());
-                        nguoiDung.setPhone(et_phone.getText().toString());
-                        nguoiDung.setHoTen(et_hoTen.getText().toString());
+                        if (validForm(passMoi, hoTenMoi, phoneMoi)) {
 
-                        final NguoiDungDAO nguoiDungDAO = new NguoiDungDAO(NguoiDungActivity.this);
-                        nguoiDungDAO.update(nguoiDung);
-                        listNguoiDung = nguoiDungDAO.getAll();
-                        adapter.notifyDataSetChanged();
-                        myDialog.dismiss();
-                        lv_nguoiDung.smoothScrollToPosition(i);
+                            nguoiDung.setPassword(passMoi);
+                            nguoiDung.setHoTen(hoTenMoi);
+                            nguoiDung.setPhone(phoneMoi);
 
-                        Snackbar snackbar = Snackbar.make(adapterView, "Đã cập nhật user", 4000);
-                        snackbar.setAction("Hoàn tác", new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                nguoiDung.setPassword(unCu);
-                                nguoiDung.setPassword(pwCu);
-                                nguoiDung.setPhone(phoneCu);
-                                nguoiDung.setHoTen(hoTenCu);
-                                nguoiDungDAO.update(nguoiDung);
-                                listNguoiDung = nguoiDungDAO.getAll();
-                                adapter.notifyDataSetChanged();
-                                Toast.makeText(NguoiDungActivity.this, "Đã hoàn tác cập nhật", Toast.LENGTH_SHORT).show();
-                            }
-                        });
-                        //SET MÀU CHỮ THÔNG BÁO
-                        View sView = snackbar.getView();
-                        TextView tv = sView.findViewById(android.support.design.R.id.snackbar_text);
-                        tv.setTextColor(Color.BLACK);
-                        tv.setTextSize(16);
-                        //SET MÀU BACKGROUND SNACKBAR
-                        sView.setBackgroundColor(ContextCompat.getColor(NguoiDungActivity.this, R.color.snackbarBackground));
-                        //SET MÀU CHỮ NÚT ACTION
-                        snackbar.setActionTextColor(Color.RED);
-                        snackbar.show();
+                            final NguoiDungDAO nguoiDungDAO = new NguoiDungDAO(NguoiDungActivity.this);
+                            nguoiDungDAO.update(nguoiDung);
+                            listNguoiDung = nguoiDungDAO.getAll();
+                            adapter.notifyDataSetChanged();
+                            myDialog.dismiss();
+                            lv_nguoiDung.smoothScrollToPosition(i);
+
+                            Snackbar snackbar = Snackbar.make(adapterView, "Đã cập nhật user", 4000);
+                            snackbar.setAction("Hoàn tác", new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    nguoiDung.setPassword(unCu);
+                                    nguoiDung.setPassword(pwCu);
+                                    nguoiDung.setPhone(phoneCu);
+                                    nguoiDung.setHoTen(hoTenCu);
+                                    nguoiDungDAO.update(nguoiDung);
+                                    listNguoiDung = nguoiDungDAO.getAll();
+                                    adapter.notifyDataSetChanged();
+                                    Toast.makeText(NguoiDungActivity.this, "Đã hoàn tác cập nhật", Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                            //SET MÀU CHỮ THÔNG BÁO
+                            View sView = snackbar.getView();
+                            TextView tv = sView.findViewById(android.support.design.R.id.snackbar_text);
+                            tv.setTextColor(Color.BLACK);
+                            tv.setTextSize(16);
+                            //SET MÀU BACKGROUND SNACKBAR
+                            sView.setBackgroundColor(ContextCompat.getColor(NguoiDungActivity.this, R.color.snackbarBackground));
+                            //SET MÀU CHỮ NÚT ACTION
+                            snackbar.setActionTextColor(Color.RED);
+                            snackbar.show();
+                        }
                     }
                 });
 
@@ -176,39 +181,7 @@ public class NguoiDungActivity extends AppCompatActivity {
                     }
                 });
 
-//                updateDialog.setNegativeButton("Cập nhật", new DialogInterface.OnClickListener() {
-//                    @Override
-//                    public void onClick(DialogInterface dialogInterface, int i) {
-//                        String maCu = et_maLoaiSach.getText().toString();
-//                        loaiSach.setMa(et_maLoaiSach.getText().toString());
-//
-//                        String tenLoaiCu = et_tenLoaiSach.getText().toString();
-//                        loaiSach.setTen(et_tenLoaiSach.getText().toString());
-//
-//                        String moTaCu = et_moTa.getText().toString();
-//                        loaiSach.setMota(et_moTa.getText().toString());
-//
-//                        int viTriCu = Integer.parseInt(et_viTri.getText().toString());
-//                        loaiSach.setVitri(Integer.parseInt(et_viTri.getText().toString()));
-//
-//                        loaiSachDAO = new LoaiSachDAO(LoaiSachActivity.this);
-//                        loaiSachDAO.update(loaiSach);
-//                        listLoaiSach = loaiSachDAO.getAll();
-//                        adapter.notifyDataSetChanged();
-//
-//
-//                    }
-//                });
-
-//                updateDialog.setPositiveButton("Hủy", new DialogInterface.OnClickListener() {
-//                    @Override
-//                    public void onClick(DialogInterface dialogInterface, int i) {
-//                        dialogInterface.cancel();
-//                    }
-//                });
-
                 myDialog.show();
-
             }
         });
     }
@@ -240,7 +213,7 @@ public class NguoiDungActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.addUser:
-                updatePassword();
+                addUser();
                 break;
             case R.id.logout:
                 logout();
@@ -249,33 +222,12 @@ public class NguoiDungActivity extends AppCompatActivity {
         return true;
     }
 
-    private void updatePassword() {
+    private void addUser() {
         Intent intent = new Intent(NguoiDungActivity.this, ThemNguoiDungActivity.class);
-        startActivity(intent);
+        startActivityForResult(intent, 999);
     }
 
     private void logout() {
-//        final AlertDialog.Builder confirmDialog = new AlertDialog.Builder(NguoiDungActivity.this);
-//        confirmDialog.setTitle("Xác nhận đăng xuất");
-//        confirmDialog.setMessage("Bạn có muốn đăng xuất khỏi tài khoản hiện tại?");
-//
-//        confirmDialog.setPositiveButton("Đăng xuất", new DialogInterface.OnClickListener() {
-//            @Override
-//            public void onClick(DialogInterface dialogInterface, final int i) {
-//                Intent intent = new Intent(NguoiDungActivity.this, LoginActivity.class);
-//                startActivity(intent);
-//                Toast.makeText(NguoiDungActivity.this, "Đã đăng xuất", Toast.LENGTH_SHORT).show();
-//            }
-//        });
-//
-//        confirmDialog.setNegativeButton("Hủy", new DialogInterface.OnClickListener() {
-//            @Override
-//            public void onClick(DialogInterface dialogInterface, int i) {
-//                dialogInterface.cancel();
-//            }
-//        });
-//        confirmDialog.show();
-
         final AlertDialog.Builder builder = new AlertDialog.Builder(this);
         View view = getLayoutInflater().inflate(R.layout.dialog_logout_user, null);
         builder.setView(view);
@@ -301,5 +253,28 @@ public class NguoiDungActivity extends AppCompatActivity {
         });
 
         alertDialog.show();
+    }
+
+    private boolean validForm(String pass, String hoTen, String soDienThoai) {
+        try {
+            if (pass.trim().length() == 0) {
+                et_password.requestFocus();
+                throw new Exception("Vui lòng nhập password");
+            }
+            if (hoTen.trim().length() == 0) {
+                et_hoTen.requestFocus();
+                throw new Exception("Vui lòng nhập họ tên");
+            }
+            if (soDienThoai.trim().length() == 0) {
+                et_phone.requestFocus();
+                throw new Exception("Vui lòng nhập số điện thoại");
+            }
+
+        } catch (Exception e) {
+            Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        return true;
     }
 }

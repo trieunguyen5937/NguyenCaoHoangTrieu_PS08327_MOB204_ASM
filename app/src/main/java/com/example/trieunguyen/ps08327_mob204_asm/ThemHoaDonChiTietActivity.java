@@ -1,5 +1,8 @@
 package com.example.trieunguyen.ps08327_mob204_asm;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -26,9 +29,12 @@ import com.example.trieunguyen.ps08327_mob204_asm.model.HoaDonChiTiet;
 import com.example.trieunguyen.ps08327_mob204_asm.model.LoaiSach;
 import com.example.trieunguyen.ps08327_mob204_asm.model.Sach;
 
+import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class ThemHoaDonChiTietActivity extends AppCompatActivity {
 
@@ -41,7 +47,14 @@ public class ThemHoaDonChiTietActivity extends AppCompatActivity {
     public ArrayList<HoaDonChiTiet> dsHDCT = new ArrayList<>();
     ListView lvCart;
     CartAdapter adapter;
-    double thanhTien = 0;
+    int vnd = 0;
+    HoaDon hoaDon = new HoaDon();
+    //ĐỊNH DẠNG TIỀN
+//    long vnd;
+    Locale localeVN = new Locale("vi", "VN");
+    NumberFormat currencyVN = NumberFormat.getCurrencyInstance(localeVN);
+    //ĐỊNH DẠNG NGÀY
+    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -126,13 +139,15 @@ public class ThemHoaDonChiTietActivity extends AppCompatActivity {
     public void thanhToanHoaDon() {
         hoaDonChiTietDAO = new HoaDonChiTietDAO(ThemHoaDonChiTietActivity.this);
         //tinh tien
-        thanhTien = 0;
+        vnd = 0;
         try {
             for (HoaDonChiTiet hd : dsHDCT) {
                 hoaDonChiTietDAO.inserHoaDonChiTiet(hd);
-                thanhTien = thanhTien + hd.getSoLuongMua() * hd.getSach().getGiaBia();
+                vnd = vnd + hd.getSoLuongMua() * hd.getSach().getGiaBia();
             }
-            tv_sum.setText(thanhTien + "");
+            //ĐỊNH DẠNG LẠI SỐ TIỀN
+            String thanhTien = currencyVN.format(vnd);
+            tv_sum.setText(thanhTien);
         } catch (Exception ex) {
             Log.e("Error", ex.toString());
         }
@@ -151,8 +166,7 @@ public class ThemHoaDonChiTietActivity extends AppCompatActivity {
     }
 
     public int validation() {
-        if (et_maSach.getText().toString().isEmpty() || et_soLuong.getText().toString().isEmpty()
-                || et_maHoaDon.getText().toString().isEmpty()) {
+        if (et_soLuong.getText().toString().isEmpty() || et_maSach.getText().toString().isEmpty()) {
             return -1;
         }
         return 1;
@@ -166,11 +180,37 @@ public class ThemHoaDonChiTietActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-//        Intent intent = new Intent();
-//        setResult(RESULT_OK, intent);
-//        finish();
-        Intent intent = new Intent(ThemHoaDonChiTietActivity.this, HoaDonActivity.class);
-        startActivity(intent);
+        if (et_maSach.getText().toString().isEmpty() || et_soLuong.getText().toString().isEmpty()) {
+            final AlertDialog alertDialog = new AlertDialog.Builder(ThemHoaDonChiTietActivity.this).create();
+            alertDialog.setTitle("Chú ý!");
+            alertDialog.setMessage("Vui lòng nhập đầy đủ thông tin HDCT");
+            alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "OK", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int which) {
+                    alertDialog.dismiss();
+                }
+            });
+            alertDialog.show();
+        } else {
+            Intent intent = new Intent();
+            Bundle b = new Bundle();
+            b.putString("MASACH", et_maSach.getText().toString());
+            b.putString("SOLUONG", et_soLuong.getText().toString());
+            setResult(RESULT_OK, intent);
+            finish();
+        }
         return true;
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        if (validation() < 0)
+            Toast.makeText(this, "Bạn chưa thêm HDCT cho hóa đơn " + et_maHoaDon.getText().toString(), Toast.LENGTH_LONG).show();
+//        Intent intent = new Intent(ThemHoaDonChiTietActivity.this, HoaDonActivity.class);
+//        Bundle b = new Bundle();
+//        b.putString("SOLUONG", et_soLuong.getText().toString());
+//        b.putString("MAHOADON", et_maHoaDon.getText().toString());
+//        startActivityForResult(intent, 000);
+//        finish();
     }
 }

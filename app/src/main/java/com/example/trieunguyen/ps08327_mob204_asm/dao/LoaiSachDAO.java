@@ -89,7 +89,7 @@ public class LoaiSachDAO {
         Cursor cursor = db.rawQuery("Select * from " + TABLE_NAME, null);
         //đưa trỏ về dòng đầu của ResultSet
         cursor.moveToFirst();
-        while (cursor.isAfterLast() == false) {
+        while (!cursor.isAfterLast()) {
             String maLoai = cursor.getString(0);
             String tenLoai = cursor.getString(1);
             String moTa = cursor.getString(2);
@@ -97,6 +97,7 @@ public class LoaiSachDAO {
             list.add(new LoaiSach(maLoai, tenLoai, moTa, viTri));
             cursor.moveToNext();
         }
+        cursor.close();
         return list;
     }
 

@@ -17,19 +17,38 @@
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="5">
+
         <com.example.trieunguyen.ps08327_mob204_asm.utilities.ClearableEditText
             android:id="@+id/et_searchField"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Tìm sách bán chạy"
             android:layout_margin="10dp"
+            android:layout_weight="4"
+            android:hint="Nhập tháng cần tìm sách bán chạy"
             android:inputType="textAutoComplete"
+            android:focusedByDefault="false"
             android:singleLine="true" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:layout_weight="1"
+            android:backgroundTint="#FA8E3E"
+            android:onClick="VIEW_SACH_TOP_10"
+            android:text="Tìm"
+            android:textColor="#fff" />
+    </LinearLayout>
 
     <ListView
         android:id="@+id/lv_sachBanChay"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="5dp" />
+        android:layout_margin="10dp" />
 
 </LinearLayout>
